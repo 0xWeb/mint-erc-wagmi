@@ -1,19 +1,24 @@
-import React from 'react'
+"use client"
+import { WagmiConfig, useConfig, createConfig, configureChains, sepolia } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+import App from './App'
+
+const { chains, publicClient } = configureChains(
+    [sepolia],
+    [publicProvider()],
+)
+const config = createConfig({
+    autoConnect: true,
+    publicClient,
+})
+
 
 function ERC20() {
-    return (
-        <main className='min-h-screen flex justify-center items-center' >
-            <section>
-                <h1>
-                    Mint 0xWeb Tokens Now!
-                </h1>
 
-                <input type="number" name="Tokens To Mint" />
-                <button>
-                    Mint
-                </button>
-            </section>
-        </main>
+    return (
+        <WagmiConfig config={config}>
+            <App />
+        </WagmiConfig>
     )
 }
 
