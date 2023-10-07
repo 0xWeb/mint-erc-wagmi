@@ -11,7 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body >{children}</body>
+      <body className='h-screen bg-[#131615] ' >{children}</body>
     </html>
   )
 }
