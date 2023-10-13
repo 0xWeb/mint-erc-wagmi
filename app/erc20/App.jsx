@@ -22,7 +22,7 @@ function App() {
 
     return (
         <main className='h-screen flex justify-center items-center text-center' >
-            <section className='flex flex-col max-w-screen-xl w-full bg-[#19191A]  border border-gray-400 rounded-md  mx-4'>
+            <section className='flex flex-col max-w-screen-xl w-full bg-[#19191A] rounded-md  mx-4'>
                 <div className=''>
                     <div className='flex items-center justify-between  border-b gap-4'>
                         <div className='flex items-center justify-center  py-6  gap-4'>

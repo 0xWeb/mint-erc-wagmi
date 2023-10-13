@@ -1,7 +1,7 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { VT323 } from 'next/font/google'
 
-// const inter = Inter({ subsets: ['latin'] })
+const vt323 = VT323({ subsets: ['latin'], weight: ['400'] })
 
 export const metadata = {
   title: 'Mint All ERC',
@@ -11,7 +11,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className='h-screen bg-[#131615] ' >{children}</body>
+      <body className={`h-screen bg-[#131615] ${vt323.className}`}>
+        <div className='h-screen grid-bg absolute w-full -z-10' />
+        {children}
+      </body>
     </html>
   )
 }
