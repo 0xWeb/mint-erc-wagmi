@@ -1,6 +1,8 @@
 import CloseIcon from '@/components/Icons/Close';
 import BigArrowLeft from '@/components/Icons/BigArrowLeft';
 import Star from '@/components/Icons/Star';
+import ShareIcon from './Icons/Share';
+import InfoIcon from './Icons/Info';
 
 function NavBar() {
     return (
@@ -13,8 +15,13 @@ function NavBar() {
                 <div className=' border-2 rounded-md border-black p-2'>
                     <BigArrowLeft />
                 </div>
-                <article className='w-[100%] border-2 rounded-md border-black  ml-2 text-black py-[6px] px-4  text-xl'>
+                <article className='flex justify-between w-[100%] border-2 rounded-md border-black  ml-2 text-black py-[6px] px-4  text-xl'>
                     https://minterc.com
+                    <div className='flex gap-4'>
+                        <InfoIcon />
+                        <ShareIcon />
+
+                    </div>
                 </article>
             </section>
 

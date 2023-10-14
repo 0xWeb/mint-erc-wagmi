@@ -64,92 +64,35 @@ body {
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
 }
 
-.corner3:after {
-  box-shadow:
-    0.2em 0.2em #fff, 0.4em 0.2em #fff, 0.6em 0.2em #fff, 0.8em 0.2em #fff, 1.0em 0.2em #fff, 1.2em 0.2em #fff, 1.4em 0.2em #fff, 2.0em 0.2em #fff, 2.2em 0.2em #fff, 2.4em 0.2em #fff, 2.6em 0.2em #fff, 2.8em 0.2em #fff, 3.0em 0.2em #fff, 3.2em 0.2em #fff, 3.4em 0.2em #fff, 3.6em 0.2em #fff, 3.8em 0.2em #fff, 4.0em 0.2em #fff, 4.2em 0.2em #fff, 4.4em 0.2em #fff, 4.6em 0.2em #fff, 4.8em 0.2em #fff, 5.0em 0.2em #fff, 5.2em 0.2em #fff, 5.4em 0.2em #fff, 5.8em 0.2em #fff,
-    0.2em 0.4em #fff, 1.4em 0.4em #fff, 2.0em 0.4em #fff,
-    0.2em 0.6em #fff, 1.4em 0.6em #fff,
-    0.2em 0.8em #fff, 0.8em 0.8em #fff, 1.0em 0.8em #fff, 1.4em 0.8em #fff, 1.8em 0.8em #fff, 2.0em 0.8em #fff, 2.2em 0.8em #fff, 2.4em 0.8em #fff, 2.6em 0.8em #fff, 2.8em 0.8em #fff, 3.0em 0.8em #fff, 3.2em 0.8em #fff, 3.4em 0.8em #fff, 3.6em 0.8em #fff, 3.8em 0.8em #fff, 4.0em 0.8em #fff, 4.2em 0.8em #fff, 4.6em 0.8em #fff,
-    0.2em 1.0em #fff, 0.8em 1.0em #fff, 1.4em 1.0em #fff, 3.6em 1.0em #fff, 3.8em 1.0em #fff,
-    0.2em 1.2em #fff, 0.8em 1.2em #fff, 2.0em 1.2em #fff, 3.2em 1.2em #fff, 3.4em 1.2em #fff,
-    0.2em 1.4em #fff, 0.4em 1.4em #fff, 0.8em 1.4em #fff, 1.2em 1.4em #fff, 1.4em 1.4em #fff, 1.6em 1.4em #fff, 2.0em 1.4em #fff, 2.4em 1.4em #fff, 2.6em 1.4em #fff, 2.8em 1.4em #fff, 3.0em 1.4em #fff,
-    0.8em 1.6em #fff, 2.0em 1.6em #fff,
-    1.4em 1.8em #fff, 2.0em 1.8em #fff,
-    0.2em 2.0em #fff, 0.4em 2.0em #fff, 0.6em 2.0em #fff, 0.8em 2.0em #fff, 1.0em 2.0em #fff, 1.4em 2.0em #fff, 1.8em 2.0em #fff, 2.0em 2.0em #fff,
-    0.2em 2.2em #fff, 1.4em 2.2em #fff,
-    0.2em 2.4em #fff, 0.8em 2.4em #fff, 1.4em 2.4em #fff,
-    0.2em 2.6em #fff, 0.8em 2.6em #fff, 1.4em 2.6em #fff,
-    0.2em 2.8em #fff, 0.8em 2.8em #fff, 1.4em 2.8em #fff,
-    0.2em 3.0em #fff, 0.8em 3.0em #fff, 1.4em 3.0em #fff,
-    0.2em 3.2em #fff, 0.8em 3.2em #fff, 1.2em 3.2em #fff,
-    0.2em 3.4em #fff, 0.8em 3.4em #fff, 1.2em 3.4em #fff,
-    0.2em 3.6em #fff, 0.8em 3.6em #fff, 1.0em 3.6em #fff,
-    0.2em 3.8em #fff, 0.8em 3.8em #fff, 1.0em 3.8em #fff,
-    0.2em 4.0em #fff, 0.8em 4.0em #fff,
-    0.2em 4.2em #fff, 0.8em 4.2em #fff,
-    0.2em 4.4em #fff,
-    0.2em 4.6em #fff, 0.8em 4.6em #fff,
-    0.2em 4.8em #fff,
-    0.2em 5.0em #fff,
-    0.2em 5.2em #fff,
-    0.2em 5.4em #fff,
-    0.2em 5.8em #fff;
+.flicker {
+  animation: blink-animation linear 1.5s infinite;
+  -webkit-animation: blink-animation linear 1.5s infinite;
 }
 
-.black {
-  background: #000;
-  /*background: rgba(0,0,0,1.0);*/
-  color: #fff;
-  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.4);
-  /*transition: background 0.5s ease-in-out;*/
+@keyframes blink-animation {
+  to {
+    opacity: 0%;
+  }
 }
 
-/*.black:hover { background: #333;}*/
-.corner {
-  position: absolute;
-  /*background:red;*/
-  background: none;
-  width: 6em;
-  height: 6em;
-  font-size: 2px;
-  font-size: 10px;
-  opacity: 1.0;
-  transition: opacity 0.3s ease-in-out;
+@-webkit-keyframes blink-animation {
+  from {
+    opacity: 0%;
+  }
 }
 
-.corner:after {
-  position: absolute;
-  content: '';
-  display: block;
-  width: 0.2em;
-  height: 0.2em;
+.window {
+  animation-duration: 0.25s;
+  animation-name: createBox;
+  animation: createBox 1.5s;
 }
 
-.topleft {
-  top: 1em;
-  left: 1em;
-  /* I do not know why, but it's better with this - */
-  -webkit-transform: rotate(360deg);
-  transform: rotate(360deg);
-}
+@keyframes createBox {
+  from {
+    transform: scale(0);
+  }
 
-.topright {
-  top: 1em;
-  right: 1em;
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-
-.bottomleft {
-  bottom: 1em;
-  left: 1em;
-  -webkit-transform: rotate(270deg);
-  transform: rotate(270deg);
-}
-
-.bottomright {
-  bottom: 1em;
-  right: 1em;
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
+  to {
+    transform: scale(1);
+  }
 }
