@@ -4,7 +4,7 @@ import Star from '@/components/Icons/Star';
 import ShareIcon from './Icons/Share';
 import InfoIcon from './Icons/Info';
 
-function NavBar() {
+function NavBar({ url }) {
     return (
         <nav className='flex flex-col w-[100%] z-30' >
             <section className='bg-[#1B1B1B] w-[100%] h-11  rounded-t-xl flex items-center justify-end px-4'>
@@ -16,7 +16,7 @@ function NavBar() {
                     <BigArrowLeft />
                 </div>
                 <article className='flex justify-between w-[100%] border-2 rounded-md border-black  ml-2 text-black py-[6px] px-4  text-xl'>
-                    https://minterc.com
+                    https://minterc.com{url}
                     <div className='flex gap-4'>
                         <InfoIcon />
                         <ShareIcon />

@@ -9,7 +9,7 @@ const ShareIcon = (props) => (
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
-        className="icon icon-tabler icon-tabler-share"
+        className="icon icon-tabler icon-tabler-share hidden sm:flex"
         {...props}
     >
         <path stroke="none" d="M0 0h24v24H0z" />

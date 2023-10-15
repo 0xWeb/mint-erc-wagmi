@@ -8,7 +8,7 @@ const InfoIcon = (props) => (
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
-        className="icon icon-tabler icon-tabler-info-hexagon"
+        className="icon icon-tabler icon-tabler-info-hexagon hidden sm:flex"
         {...props}
     >
         <path stroke="none" d="M0 0h24v24H0z" />

@@ -84,7 +84,7 @@ body {
 .window {
   animation-duration: 0.25s;
   animation-name: createBox;
-  animation: createBox 1.5s;
+  animation: createBox 1s;
 }
 
 @keyframes createBox {
@@ -95,4 +95,10 @@ body {
   to {
     transform: scale(1);
   }
+}
+
+img {
+  -webkit-filter: grayscale(100%);
+  /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
 }

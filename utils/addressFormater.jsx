@@ -1,1 +1,1 @@
-export const addressFormater = (address) => `${address.slice(0, 6)}...${address.slice(address.length - 6)}`;
+export const addressFormater = (address) => `${address.slice(0, 5)}...${address.slice(address.length - 5)}`;
