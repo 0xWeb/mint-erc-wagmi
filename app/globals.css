@@ -84,7 +84,7 @@ body {
 .window {
   animation-duration: 0.25s;
   animation-name: createBox;
-  animation: createBox 1s;
+  animation: createBox 2s;
 }
 
 @keyframes createBox {

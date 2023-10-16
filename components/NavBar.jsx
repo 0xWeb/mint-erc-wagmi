@@ -3,6 +3,7 @@ import BigArrowLeft from '@/components/Icons/BigArrowLeft';
 import Star from '@/components/Icons/Star';
 import ShareIcon from './Icons/Share';
 import InfoIcon from './Icons/Info';
+import Link from 'next/link';
 
 function NavBar({ url }) {
     return (
@@ -12,9 +13,9 @@ function NavBar({ url }) {
             </section>
 
             <section className='bg-white  w-[100%] flex items-center px-4 py-2'>
-                <div className=' border-2 rounded-md border-black p-2'>
+                <Link href={"/"} className=' border-2 rounded-md border-black p-2'>
                     <BigArrowLeft />
-                </div>
+                </Link>
                 <article className='flex justify-between w-[100%] border-2 rounded-md border-black  ml-2 text-black py-[6px] px-4  text-xl'>
                     https://minterc.com{url}
                     <div className='flex gap-4'>

@@ -2,18 +2,7 @@ export const contract = "0xe6EB21B75D14A5599E176F52f1ee2a4B23E8849F"
 
 export const ABI = [
     {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "name_",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "symbol_",
-                "type": "string"
-            }
-        ],
+        "inputs": [],
         "stateMutability": "nonpayable",
         "type": "constructor"
     },
@@ -192,6 +181,19 @@ export const ABI = [
                 "type": "bool"
             }
         ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_quantity",
+                "type": "uint256"
+            }
+        ],
+        "name": "mintTokens",
+        "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
     },
