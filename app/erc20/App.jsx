@@ -1,12 +1,12 @@
 "use client"
 
 import Image from 'next/image'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useMemo, useState } from 'react'
 
 import Erc20MintButton from '@/components/Erc20MintButton'
 import ConnectButton from '@/components/ConnectButton'
 
-import { useAccount, useConnect, useEnsName, useBalance, useToken, useContractRead, useContractWrite } from 'wagmi'
+import { useAccount, useConnect, useEnsName, useBalance, useToken, useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WeiPerEther, ethers, parseEther, toBigInt } from 'ethers';
 
@@ -28,6 +28,8 @@ function App() {
     const [mintAmount, setMintAmount] = useState('')
     const [tokenSupply, setTokenSupply] = useState()
     const [userBalance, setUserBalance] = useState()
+    const [mintHash, setMintHash] = useState()
+
 
     const { connect } = useConnect({
         connector: new InjectedConnector(),
@@ -36,9 +38,24 @@ function App() {
         address,
         watch: true,
     })
-    const token = useToken({
-        address: contract
-    })
+
+    const useGetBalance = () => {
+        return useContractRead({
+            address: contract,
+            abi: ABI,
+            functionName: 'balanceOf',
+            args: [address],
+            onSuccess(data) {
+                setUserBalance(ethers.formatEther(data))
+            },
+            cacheTime: 0,
+            staleTime: 0,
+            scopeKey: 'balanceOf',
+        });
+    }
+
+    const { refetch: refetchBalance } = useGetBalance();
+
     const balanceOf = useContractRead({
         address: contract,
         abi: ABI,
@@ -48,6 +65,7 @@ function App() {
             setUserBalance(ethers.formatEther(data))
         }
     })
+
     const totalSupply = useContractRead({
         address: contract,
         abi: ABI,
@@ -65,16 +83,26 @@ function App() {
         abi: ABI,
         functionName: 'mintTokens',
         args: [mintAmount],
+        onSuccess(data) {
+            setMintHash(data.hash);
+        }
     })
 
-    useEffect(() => {
-        balanceOf.refetch()
-        token.refetch()
-    }, [isSuccess, balanceOf, token, totalSupply])
+    const waitForTransaction = useWaitForTransaction({
+        confirmations: 1,
+        hash: mintHash,
+        onSuccess() {
+            refetchBalance()
+        },
+    })
+
 
 
     return (
         <main className='flex min-h-screen flex-col lg:flex-row items-center justify-center  mx-4' >
+            <button onClick={refetchBalance}>
+                Click me
+            </button>
 
             <section className='flex flex-col bg-white  rounded-xl relative max-w-screen-xl w-full z-30'>
                 <div className='window-bg z-10' />
@@ -85,6 +113,8 @@ function App() {
                         : <ConnectButton connect={connect} />
                     }
                 </aside>
+
+
                 <article className='flex justify-center lg:justify-start items-center gap-6 md:mx-16'>
                     <section className='flex flex-col md:min-w-[350px] justify-center items-center mb-20 z-10 bg-[#1B1B1B] px-12 py-8 rounded-lg'>
                         <img src="erc20.gif" alt="" className='w-[200px] z-30' />

@@ -13,7 +13,7 @@ function NavBar({ url }) {
             </section>
 
             <section className='bg-white  w-[100%] flex items-center px-4 py-2'>
-                <Link href={"/"} className=' border-2 rounded-md border-black p-2 hover:scale-[103%] transition-all'>
+                <Link href={"/"} className=' border-2 rounded-md border-black p-2 hover:scale-[101%] transition-all hover:bg-slate-100'>
                     <BigArrowLeft />
                 </Link>
                 <article className=' flex justify-between w-[100%] border-2 rounded-md border-black  ml-2 text-black py-[6px] px-4  text-xl'>

@@ -1,17 +1,9 @@
-"use client"
 import { WagmiConfig, useConfig, createConfig, configureChains, sepolia } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import App from './App'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
 
-const { chains, publicClient } = configureChains(
-    [sepolia],
-    [publicProvider()],
-)
-const config = createConfig({
-    autoConnect: true,
-    publicClient,
-})
-
+import { config, chains, publicClient } from '@/utils/WagmiConfig'
 
 function ERC20() {
 

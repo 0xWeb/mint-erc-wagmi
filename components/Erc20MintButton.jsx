@@ -6,7 +6,7 @@ function Erc20MintButton({ handleChange, write }) {
                 type="number"
                 id="large-input"
                 placeholder='Amount To Mint'
-                className="block w-full p-4 mb-4 rounded-lg bg-[#2C2C2C] placeholder-gray-400 text-white outline-none" ç
+                className="block w-full p-4 mb-4 rounded-lg bg-[#2C2C2C] placeholder-gray-400 text-white outline-none"
                 onChange={(e) => {
                     handleChange(e.currentTarget.value)
                 }}
