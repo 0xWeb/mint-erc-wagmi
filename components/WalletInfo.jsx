@@ -13,7 +13,7 @@ function WalletInfo({ address, balance }) {
             </div>
 
             <div className="flex gap-1 justify-between items-center text-center bg-[#1B1B1B] text-white font-medium rounded-lg  px-4 py-2.5">
-                {balance.slice(0, 6)} <EthereumIcon />
+                {balance?.slice(0, 6)} <EthereumIcon />
             </div>
 
         </aside>

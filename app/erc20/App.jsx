@@ -55,8 +55,8 @@ function App() {
                         <h2 className='text-5xl border-b-2 mb-4'>Token & User Info</h2>
                         <div className='text-2xl'>
                             <h4>User Address: {address ? address : 'No wallet detected'}</h4>
-                            <h4>Ethereum Balance: {data ? `${data.formatted.slice(0, 6)} ETH` : 'No wallet detected'}</h4>
-                            <h4>OxToken Balance: {data ? `${data.formatted.slice(0, 6)} 0XW` : 'No wallet detected'}</h4>
+                            <h4>Ethereum Balance: {data ? `${data.formatted?.slice(0, 6)} ETH` : 'No wallet detected'}</h4>
+                            <h4>OxToken Balance: {data ? `${data.formatted?.slice(0, 6)} 0XW` : 'No wallet detected'}</h4>
 
                             <h4>Token Supply: {address ? address : 'No wallet detected'}</h4>
                             <h4>Tokens Minted: {address ? address : 'No wallet detected'}</h4>
