@@ -4,7 +4,7 @@ import { handleToast } from "@/utils/Toast"
 function Erc20MintButton({ handleChange, write, address }) {
 
     const handleClick = () => {
-        handleToast('error', 'Connect Wallet To Mint Tokens', '')
+        handleToast('error', 'Connect Wallet To Mint Tokens')
     }
     return (
         <>

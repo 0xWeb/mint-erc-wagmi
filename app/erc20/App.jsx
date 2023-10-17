@@ -14,6 +14,7 @@ import { handleToast } from "@/utils/Toast"
 
 
 import { useAccount, useConnect, useBalance, useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
+import { watchContractEvent } from '@wagmi/core'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { ethers, parseEther } from 'ethers';
 import { Toaster, toast } from 'sonner'
@@ -83,12 +84,7 @@ function App() {
         args: [mintAmount],
 
         onError(error) {
-            console.log(error.message);
-
-
-            toast.error(error.details.split(':', 1).join(' '), {
-                description: error.message.split('.', 1).join(' '),
-            })
+            handleToast('error', 'User denied transaction')
         },
         onSuccess(data) {
             setMintHash(data.hash);
@@ -104,19 +100,26 @@ function App() {
         hash: mintHash,
         onSuccess() {
 
-            handleToast('success', `You succesfully minted: ${ethers.formatEther(mintAmount)} W3T`, '')
             refetchBalance()
         },
     })
 
+    const unwatch = watchContractEvent(
+        {
+            address: contract,
+            abi: ABI,
+            eventName: 'tokensMint',
+        },
+        (log) => handleToast('success', `You succesfully minted: ${ethers.formatEther(`${log[0].args.tokensMinted}`)} W3T`)
+        // handleToast('success', `You succesfully minted: ${log[0]?.args.value} W3T`)
+    );
 
 
     return (
         <main className='flex min-h-screen flex-col lg:flex-row items-center justify-center  mx-4' >
-            <Toaster richColors position="top-right" />
 
             <section className='flex flex-col bg-white  rounded-xl relative max-w-screen-xl w-full z-30'>
-
+                <Toaster richColors position="top-right" duration={2000} />
                 <div className='window-bg z-10' />
                 <NavBar url={'/erc20'} />
                 <aside className='flex justify-end z-10 '>
