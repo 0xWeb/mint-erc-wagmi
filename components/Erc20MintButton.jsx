@@ -1,5 +1,11 @@
-function Erc20MintButton({ handleChange, write }) {
 
+import { handleToast } from "@/utils/Toast"
+
+function Erc20MintButton({ handleChange, write, address }) {
+
+    const handleClick = () => {
+        handleToast('error', 'Connect Wallet To Mint Tokens', '')
+    }
     return (
         <>
             <input
@@ -14,7 +20,7 @@ function Erc20MintButton({ handleChange, write }) {
             <button
                 type="button"
                 className="flex w-full  justify-center text-center text-white bg-[#3f3f47] hover:scale-[103%] transition-all outline-none  font-medium rounded-lg text-lg px-5 py-2.5 items-center"
-                onClick={write}
+                onClick={address ? write : handleClick}
             >
                 Mint Tokens Now
             </button>
