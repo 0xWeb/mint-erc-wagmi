@@ -100,9 +100,6 @@ function App() {
 
     return (
         <main className='flex min-h-screen flex-col lg:flex-row items-center justify-center  mx-4' >
-            <button onClick={refetchBalance}>
-                Click me
-            </button>
 
             <section className='flex flex-col bg-white  rounded-xl relative max-w-screen-xl w-full z-30'>
                 <div className='window-bg z-10' />
