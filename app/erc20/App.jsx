@@ -12,17 +12,11 @@ import ErcInfo from '@/components/ErcInfo'
 import { contract, ABI } from '@/constants/erc20'
 import { handleToast } from "@/utils/Toast"
 
+import { useAccount, useConnect, useBalance, useContractRead, useContractWrite, useWaitForTransaction, useContractEvent } from 'wagmi'
 
-import { useAccount, useConnect, useBalance, useContractRead, useContractWrite, useWaitForTransaction, useContractEvent, useTransaction } from 'wagmi'
 
-import { InjectedConnector } from 'wagmi/connectors/injected'
 import { ethers, parseEther } from 'ethers';
 import { Toaster, toast } from 'sonner'
-
-
-
-
-
 
 function App() {
 
@@ -36,9 +30,8 @@ function App() {
         setMintAmount(parseEther(amount))
     }
 
-    const { connect } = useConnect({
-        connector: new InjectedConnector(),
-    })
+    const { connect, error, connectors, pendingConnector } = useConnect()
+
     const { data: balance } = useBalance({
         address,
         watch: true,
@@ -119,8 +112,19 @@ function App() {
 
     return (
         <main className='flex min-h-screen flex-col lg:flex-row items-center justify-center  mx-4' >
+            <div className=' bg-red-500 flex flex-col px-12 py-4 gap-5 text-2xl'>
+                {connectors.map((connector) => (
+                    <button
+                        key={connector.id}
+                        onClick={() => connect({ connector })}
+                    >
+                        {connector.name}
+                        {connector?.id === pendingConnector?.id && error === null && ' (connecting)'}
+                    </button>
+                ))}
+            </div>
 
-            <section className='flex flex-col bg-white  rounded-xl relative max-w-screen-xl w-full z-30'>
+            {/* <section className='flex flex-col bg-white  rounded-xl relative max-w-screen-xl w-full z-30'>
                 <Toaster richColors position="top-right" duration={2000} />
                 <div className='window-bg z-10' />
                 <NavBar url={'/erc20'} />
@@ -142,7 +146,7 @@ function App() {
                     <ErcInfo address={address} data={balance} userBalance={userBalance} contract={contract} tokenSupply={tokenSupply} />
 
                 </article>
-            </section>
+            </section> */}
 
         </main>
     )
