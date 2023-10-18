@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@tabler/icons-react": "^2.39.0",
-    "dotenv": "^16.3.1",
+    "encoding": "^0.1.13",
     "ethers": "^6.8.0",
+    "lokijs": "^1.5.12",
     "next": "13.5.4",
+    "pino-pretty": "^10.2.3",
     "react": "^18",
     "react-dom": "^18",
     "sonner": "^1.0.3",

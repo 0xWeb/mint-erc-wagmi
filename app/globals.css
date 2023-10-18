@@ -108,3 +108,37 @@ img {
   /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
 }
+
+.show-connect-modal {
+  animation: showModalAnimation 0.6s;
+}
+
+.hidde-connect-modal {
+  animation: hiddeModalAnimation 1s;
+}
+
+
+
+@keyframes showModalAnimation {
+  from {
+    transform: translateY(150px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 100%;
+  }
+}
+
+@keyframes hiddeModalAnimation {
+  from {
+    transform: translateY(0);
+    opacity: 100%;
+  }
+
+  to {
+    transform: translateY(150px);
+    opacity: 0;
+  }
+}

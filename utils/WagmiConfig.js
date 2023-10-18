@@ -20,11 +20,18 @@ export const { chains, publicClient } = configureChains(
     { stallTimeout: 5000 },
 )
 export const config = createConfig({
-    autoConnect: true,
+    autoConnect: false,
     connectors: [
+        new InjectedConnector({
+            chains,
+            options: {
+                name: 'Injected',
+                shimDisconnect: false,
+            },
+        }),
         new MetaMaskConnector({
             chains, options: {
-                shimDisconnect: false,
+                shimDisconnect: true,
             },
         }),
         new CoinbaseWalletConnector({
@@ -37,13 +44,6 @@ export const config = createConfig({
             chains,
             options: {
                 projectId: 'a3f27ab7aa7ca796529899ade00f2a63',
-            },
-        }),
-        new InjectedConnector({
-            chains,
-            options: {
-                name: 'Injected',
-                shimDisconnect: false,
             },
         }),
     ],
