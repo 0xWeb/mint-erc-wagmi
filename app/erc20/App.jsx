@@ -39,7 +39,7 @@ function App() {
     const { connect } = useConnect({
         connector: new InjectedConnector(),
     })
-    const { data: balance, isError: balanceError, isLoading: balanceLoading } = useBalance({
+    const { data: balance } = useBalance({
         address,
         watch: true,
     })

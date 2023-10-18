@@ -1,9 +1,9 @@
-import { WagmiConfig, useConfig, createConfig, configureChains, sepolia } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
-import App from './App'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { WagmiConfig } from 'wagmi'
 
-import { config, chains, publicClient } from '@/utils/WagmiConfig'
+import App from './App'
+
+
+import { config } from '@/utils/WagmiConfig'
 
 function ERC20() {
 
