@@ -108,7 +108,6 @@ function App() {
         eventName: 'tokensMint',
         hash: mintHash,
         listener(log) {
-            console.log(log);
             if (log[0].args.sender === address) {
                 unwatch?.()
                 handleToast('success', `You succesfully minted: ${ethers.formatEther(`${log[0].args.tokensMinted}`)} W3T`)
