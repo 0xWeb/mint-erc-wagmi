@@ -13,8 +13,8 @@ import { contract, ABI } from '@/constants/erc20'
 import { handleToast } from "@/utils/Toast"
 
 
-import { useAccount, useConnect, useBalance, useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
-import { watchContractEvent } from '@wagmi/core'
+import { useAccount, useConnect, useBalance, useContractRead, useContractWrite, useWaitForTransaction, useContractEvent, useTransaction } from 'wagmi'
+
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { ethers, parseEther } from 'ethers';
 import { Toaster, toast } from 'sonner'
@@ -32,6 +32,9 @@ function App() {
     const [userBalance, setUserBalance] = useState()
     const [mintHash, setMintHash] = useState()
 
+    const handleChange = (amount) => {
+        setMintAmount(parseEther(amount))
+    }
 
     const { connect } = useConnect({
         connector: new InjectedConnector(),
@@ -91,28 +94,28 @@ function App() {
         }
     })
 
-    const handleChange = (amount) => {
-        setMintAmount(parseEther(amount))
-    }
-
     const waitForTransaction = useWaitForTransaction({
         confirmations: 1,
         hash: mintHash,
         onSuccess() {
-
             refetchBalance()
         },
     })
 
-    const unwatch = watchContractEvent(
-        {
-            address: contract,
-            abi: ABI,
-            eventName: 'tokensMint',
+    const unwatch = useContractEvent({
+        address: contract,
+        abi: ABI,
+        eventName: 'tokensMint',
+        hash: mintHash,
+        listener(log) {
+            console.log(log);
+            if (log[0].args.sender === address) {
+                unwatch?.()
+                handleToast('success', `You succesfully minted: ${ethers.formatEther(`${log[0].args.tokensMinted}`)} W3T`)
+            }
+
         },
-        (log) => handleToast('success', `You succesfully minted: ${ethers.formatEther(`${log[0].args.tokensMinted}`)} W3T`)
-        // handleToast('success', `You succesfully minted: ${log[0]?.args.value} W3T`)
-    );
+    })
 
 
     return (
