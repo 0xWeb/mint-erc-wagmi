@@ -1,4 +1,4 @@
-import PageButton from "../components/PageButton";
+import PageButton from "@/components/PageButton";
 import NavBar from '@/components/NavBar';
 
 export default function Home() {

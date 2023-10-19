@@ -3,38 +3,38 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-import Erc20MintButton from '@/components/Erc20MintButton'
+import Erc20MintButton from '@/components/erc20/Erc20MintButton'
 import ConnectButton from '@/components/ConnectButton'
 import NavBar from '@/components/NavBar'
 import WalletInfo from '@/components/WalletInfo'
-import ErcInfo from '@/components/ErcInfo'
+import ErcInfo from '@/components/erc20/Erc20Info'
+import ConnectModal from '@/components/ConnectModal'
 
 import { contract, ABI, supported_networks } from '@/constants/erc20'
 import { handleToast } from "@/utils/Toast"
 
-import { useAccount, useConnect, useBalance, useContractRead, useContractWrite, useWaitForTransaction, useSwitchNetwork, useNetwork, useDisconnect } from 'wagmi'
+import { useAccount, useConnect, useContractRead, useContractWrite, useWaitForTransaction, useSwitchNetwork, useNetwork } from 'wagmi'
 
 
 import { ethers, parseEther, } from 'ethers';
 import { Toaster, toast } from 'sonner'
+import { useGetBalance } from '@/hooks/useGetBalance'
+import { useGetTokenBalance } from '@/hooks/useGetTokenBalance'
 
-import ConnectModal from '@/components/ConnectModal'
 
 function App() {
     const [mintAmount, setMintAmount] = useState("")
     const [tokenSupply, setTokenSupply] = useState()
-    const [userBalance, setUserBalance] = useState()
     const [mintHash, setMintHash] = useState()
     const [openModal, setOpenModal] = useState(false)
     const [tokensMinted, setTokensMinted] = useState()
-    const [balance, setBalance] = useState()
 
     const { connect, error: connectError, connectors, pendingConnector } = useConnect()
     const { address, isConnected, onConnect } = useAccount({
         onConnect() {
             setOpenModal(false)
-            refetchBalance()
-            refetchTokenBalance()
+            getBalance.refetch()
+            getTokensBalance.refetch()
             if (chain.id !== supported_networks.sepolia) {
                 handleToast('error', 'Network Not Supported')
                 switchNetwork()
@@ -48,33 +48,8 @@ function App() {
         throwForSwitchChainNotSupported: true,
     })
 
-
-    const useGetBalance = () => {
-        return useBalance({
-            address,
-            watch: true,
-            onSuccess(data) {
-                setBalance(data)
-            },
-        })
-    }
-
-    const useGetTokenBalance = () => {
-        return useContractRead({
-            address: contract,
-            abi: ABI,
-            functionName: 'balanceOf',
-            args: [address],
-            onSuccess(data) {
-                setUserBalance(ethers.formatEther(data))
-            },
-            cacheTime: 0,
-            staleTime: 0,
-            scopeKey: 'balanceOf',
-        });
-    }
-    const { refetch: refetchTokenBalance } = useGetTokenBalance();
-    const { refetch: refetchBalance } = useGetBalance();
+    const { getTokensBalance, tokensBalance } = useGetTokenBalance({ address });
+    const { getBalance, balance } = useGetBalance({ address });
 
     const totalSupply = useContractRead({
         address: contract,
@@ -83,7 +58,6 @@ function App() {
         watch: true,
         onSuccess(data) {
             setTokenSupply(ethers.formatEther(data))
-
         },
     })
     const { write: mintTokens, isSuccess, isError, isLoading } = useContractWrite({
@@ -91,7 +65,6 @@ function App() {
         abi: ABI,
         functionName: 'mintTokens',
         args: [mintAmount],
-
         onError(error) {
             handleToast('error', error.details)
         },
@@ -105,8 +78,8 @@ function App() {
         confirmations: 1,
         hash: mintHash,
         onSuccess() {
-            refetchBalance()
-            refetchTokenBalance()
+            getBalance.refetch()
+            getTokensBalance.refetch()
             handleToast('success', `You succesfully minted: ${tokensMinted} W3T`)
         },
     })
@@ -151,7 +124,7 @@ function App() {
 
                         <Erc20MintButton mintAmount={mintAmount} handleChange={handleChange} write={mintTokens} address={address} />
                     </section>
-                    <ErcInfo supportedNetworks={supported_networks.sepolia} chain={chain} address={address} data={balance} userBalance={userBalance} contract={contract} tokenSupply={tokenSupply} />
+                    <ErcInfo supportedNetworks={supported_networks.sepolia} chain={chain} address={address} data={balance} tokensBalance={tokensBalance} contract={contract} tokenSupply={tokenSupply} />
 
                 </article>
             </section>
