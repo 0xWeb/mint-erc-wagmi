@@ -13,12 +13,12 @@ export const metadata = {
     siteName: 'Next.js',
     images: [
       {
-        url: 'https://nextjs.org/og.png',
+        url: 'https://miro.medium.com/v2/resize:fit:1358/1*AeqqL-tYqkp40dy6jnqreA.png',
         width: 800,
         height: 600,
       },
       {
-        url: 'https://nextjs.org/og-alt.png',
+        url: 'https://miro.medium.com/v2/resize:fit:1358/1*AeqqL-tYqkp40dy6jnqreA.png',
         width: 1800,
         height: 1600,
         alt: 'My custom alt',
