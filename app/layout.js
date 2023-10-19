@@ -9,8 +9,8 @@ export const metadata = {
   openGraph: {
     title: 'Next.js',
     description: 'Mint all the ERC in one website',
-    url: 'https://nextjs.org',
-    siteName: 'Next.js',
+    url: 'https://mint-erc-wagmi.vercel.app/',
+    siteName: 'ERC Minter',
     images: [
       {
         url: 'https://miro.medium.com/v2/resize:fit:1358/1*AeqqL-tYqkp40dy6jnqreA.png',
