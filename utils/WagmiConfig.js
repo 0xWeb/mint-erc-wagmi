@@ -26,7 +26,7 @@ export const config = createConfig({
             chains,
             options: {
                 name: 'Injected',
-                shimDisconnect: false,
+                shimDisconnect: true,
             },
         }),
         new MetaMaskConnector({

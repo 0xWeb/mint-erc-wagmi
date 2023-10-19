@@ -1,4 +1,8 @@
-export const contract = "0xF5a6172f440B9E53073D4069a1E9825132e2D69B"
+export const contract = "0xE6e16C964cc11c400b663Ec2Db9695C792CDDC9a"
+
+export const supported_networks = {
+    sepolia: 11155111
+}
 
 export const ABI = [
     {

@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Erc20MintButton from '@/components/Erc20MintButton'
 import ConnectButton from '@/components/ConnectButton'
@@ -9,35 +9,57 @@ import NavBar from '@/components/NavBar'
 import WalletInfo from '@/components/WalletInfo'
 import ErcInfo from '@/components/ErcInfo'
 
-import { contract, ABI } from '@/constants/erc20'
+import { contract, ABI, supported_networks } from '@/constants/erc20'
 import { handleToast } from "@/utils/Toast"
 
-import { useAccount, useConnect, useBalance, useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
+import { useAccount, useConnect, useBalance, useContractRead, useContractWrite, useWaitForTransaction, useSwitchNetwork, useNetwork, useDisconnect } from 'wagmi'
 
 
 import { ethers, parseEther, } from 'ethers';
 import { Toaster, toast } from 'sonner'
 
-import { IconSquareX } from '@tabler/icons-react'
 import ConnectModal from '@/components/ConnectModal'
 
 function App() {
-    const [mintAmount, setMintAmount] = useState('')
+    const [mintAmount, setMintAmount] = useState("")
     const [tokenSupply, setTokenSupply] = useState()
     const [userBalance, setUserBalance] = useState()
     const [mintHash, setMintHash] = useState()
     const [openModal, setOpenModal] = useState(false)
     const [tokensMinted, setTokensMinted] = useState()
+    const [balance, setBalance] = useState()
 
     const { connect, error: connectError, connectors, pendingConnector } = useConnect()
-    const { address, isConnected } = useAccount()
-
-    const { data: balance } = useBalance({
-        address,
-        watch: true,
+    const { address, isConnected, onConnect } = useAccount({
+        onConnect() {
+            setOpenModal(false)
+            refetchBalance()
+            refetchTokenBalance()
+            if (chain.id !== supported_networks.sepolia) {
+                handleToast('error', 'Network Not Supported')
+                switchNetwork()
+            }
+        }
     })
 
+    const { chain } = useNetwork()
+    const { chains, error, pendingChainId, switchNetwork } = useSwitchNetwork({
+        chainId: 11155111,
+        throwForSwitchChainNotSupported: true,
+    })
+
+
     const useGetBalance = () => {
+        return useBalance({
+            address,
+            watch: true,
+            onSuccess(data) {
+                setBalance(data)
+            },
+        })
+    }
+
+    const useGetTokenBalance = () => {
         return useContractRead({
             address: contract,
             abi: ABI,
@@ -51,18 +73,8 @@ function App() {
             scopeKey: 'balanceOf',
         });
     }
-
+    const { refetch: refetchTokenBalance } = useGetTokenBalance();
     const { refetch: refetchBalance } = useGetBalance();
-
-    const balanceOf = useContractRead({
-        address: contract,
-        abi: ABI,
-        functionName: 'balanceOf',
-        args: [address],
-        onSuccess(data) {
-            setUserBalance(ethers.formatEther(data))
-        }
-    })
 
     const totalSupply = useContractRead({
         address: contract,
@@ -71,6 +83,7 @@ function App() {
         watch: true,
         onSuccess(data) {
             setTokenSupply(ethers.formatEther(data))
+
         },
     })
     const { write: mintTokens, isSuccess, isError, isLoading } = useContractWrite({
@@ -93,16 +106,26 @@ function App() {
         hash: mintHash,
         onSuccess() {
             refetchBalance()
+            refetchTokenBalance()
             handleToast('success', `You succesfully minted: ${tokensMinted} W3T`)
         },
     })
 
-    const handleChange = (amount) => {
-        setMintAmount(parseEther(amount))
+    const handleChange = (amount = 1) => {
+        setMintAmount(parseEther(`${amount}`))
+
     }
     const handleConnectModal = () => {
         setOpenModal(!openModal)
     }
+
+    useEffect(() => {
+        if (isConnected && chain.id !== supported_networks.sepolia) {
+            handleToast('error', 'Network Not Supported Swicht To Sepolia')
+            switchNetwork()
+        }
+    }, [chain])
+
 
     return (
         <main className='flex min-h-screen flex-col lg:flex-row items-center justify-center mx-4' >
@@ -114,7 +137,7 @@ function App() {
                 <div className='window-bg z-10' />
                 <NavBar url={'/erc20'} />
                 <aside className='flex justify-end z-20 '>
-                    {isConnected
+                    {isConnected && chain.id === 11155111
                         ? <WalletInfo address={address} balance={balance?.formatted} />
                         : <ConnectButton handleConnectModal={handleConnectModal} />
                     }
@@ -124,11 +147,11 @@ function App() {
                 <article className='flex justify-center lg:justify-start items-center gap-6 md:mx-16'>
 
                     <section className='flex flex-col md:min-w-[350px] justify-center items-center mb-20 z-20 bg-[#1B1B1B] px-12 py-8 rounded-lg'>
-                        <Image width={200} height={200} loading='lazy' src="/erc20.gif" alt="" />
+                        <Image width={200} height={200} loading='lazy' src="/erc20.gif" alt="" priority={false} />
 
-                        <Erc20MintButton handleChange={handleChange} write={mintTokens} address={address} />
+                        <Erc20MintButton mintAmount={mintAmount} handleChange={handleChange} write={mintTokens} address={address} />
                     </section>
-                    <ErcInfo address={address} data={balance} userBalance={userBalance} contract={contract} tokenSupply={tokenSupply} />
+                    <ErcInfo supportedNetworks={supported_networks.sepolia} chain={chain} address={address} data={balance} userBalance={userBalance} contract={contract} tokenSupply={tokenSupply} />
 
                 </article>
             </section>
