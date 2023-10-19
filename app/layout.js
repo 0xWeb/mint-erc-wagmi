@@ -7,10 +7,10 @@ export const metadata = {
   title: 'Home | Ethereum request for comment',
   description: 'Mint ERC20, ERC721 and ERC1155 on Sepolia Network. \n\n Website builded with Wagmi React Hooks',
   openGraph: {
-    title: 'Title | Ethereum request for comment',
-    description: 'Mint ERC20, ERC721 and ERC1155 on Sepolia Network. \n\n Website builded with Wagmi React Hooks',
+    title: 'Home | Ethereum request for comment',
+    description: 'Mint ERC20, ERC721 and ERC1155 on Sepolia Network.\n\ Website builded with Wagmi React Hooks.',
     url: 'https://mint-erc-wagmi.vercel.app/',
-    siteName: 'SiteName | Ethereum request for comment',
+    siteName: 'Tesnet Token Standards Minter',
     images: [
       {
         url: 'https://cdn.discordapp.com/attachments/913843318859911168/1164629289824686222/image.png',
