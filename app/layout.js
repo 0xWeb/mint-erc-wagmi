@@ -4,13 +4,13 @@ import { VT323 } from 'next/font/google'
 const vt323 = VT323({ subsets: ['latin'], weight: ['400'] })
 
 export const metadata = {
-  title: 'ERC Mint | Ethereum request for comment',
+  title: 'Home | Ethereum request for comment',
   description: 'Mint ERC20, ERC721 and ERC1155 on Sepolia Network. \n\n Website builded with Wagmi React Hooks',
   openGraph: {
-    title: 'ERC Mint | Ethereum request for comment',
+    title: 'Title | Ethereum request for comment',
     description: 'Mint ERC20, ERC721 and ERC1155 on Sepolia Network. \n\n Website builded with Wagmi React Hooks',
     url: 'https://mint-erc-wagmi.vercel.app/',
-    siteName: 'ERC Mint | Ethereum request for comment',
+    siteName: 'SiteName | Ethereum request for comment',
     images: [
       {
         url: 'https://cdn.discordapp.com/attachments/913843318859911168/1164629289824686222/image.png',

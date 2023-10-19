@@ -6,8 +6,8 @@ import App from './App'
 import { config } from '@/utils/WagmiConfig'
 
 export const metadata = {
-    title: 'ERC20',
-    description: 'Mint ERC20 Tokens on Sepolia Network',
+    title: 'ERC-20 Token Standard',
+    description: 'Mint ERC-20 Tokens on Sepolia Network',
     openGraph: {
         title: 'Next.js',
         description: 'The React Framework for the Web',
