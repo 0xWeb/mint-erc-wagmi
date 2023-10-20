@@ -1,7 +1,7 @@
 
 import { handleToast } from "@/utils/Toast"
 
-function Erc20MintButton({ mintAmount, handleChange, write, address }) {
+function Erc20MintSection({ mintAmount, handleChange, write, address }) {
 
     const handleClickAmount = () => {
         handleToast('error', 'The Number Of Tokens Cannot Be Empty')
@@ -31,4 +31,4 @@ function Erc20MintButton({ mintAmount, handleChange, write, address }) {
     )
 }
 
-export default Erc20MintButton
+export default Erc20MintSection
