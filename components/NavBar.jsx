@@ -16,7 +16,7 @@ function NavBar({ url }) {
                 </Link>
                 <article className=' flex justify-between w-[100%] border-2 rounded-md border-black  ml-2 text-black py-[6px] px-4  text-xl'>
                     https://minterc.com{url}
-                    <div className='flex gap-4'>
+                    <div className=' gap-4 hidden md:flex'>
                         <IconInfoHexagon />
                         <IconShare />
 

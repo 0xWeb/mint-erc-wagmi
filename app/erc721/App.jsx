@@ -19,13 +19,14 @@ import { Toaster, toast } from 'sonner'
 import { useGetBalance } from '@/hooks/useGetBalance'
 import { useGetTokenBalance } from '@/hooks/useGetTokenBalance'
 import Erc721Info from '@/components/erc721/Erc721Info'
+import Erc721MintSection from '@/components/erc721/Erc721MintSection'
 
 
 function App() {
     const standard = '721'
 
     const [mintAmount, setMintAmount] = useState("")
-    const [tokenSupply, setTokenSupply] = useState()
+    const [tokenSupply, setTokenSupply] = useState(12)
     const [mintHash, setMintHash] = useState()
     const [openModal, setOpenModal] = useState(false)
     const [tokensMinted, setTokensMinted] = useState()
@@ -59,6 +60,17 @@ function App() {
         watch: true,
         onSuccess(data) {
             setTokenSupply(ethers.formatEther(data))
+
+        },
+    })
+    const tokenOfOwnerByIndex = useContractRead({
+        address: contract,
+        abi: ABI,
+        functionName: 'tokenOfOwnerByIndex',
+        watch: true,
+        args: [address, 1],
+        onSuccess(data) {
+            console.log(data);
         },
     })
     const { write: mintNFT, isSuccess, isError, isLoading } = useContractWrite({
@@ -99,11 +111,11 @@ function App() {
         }
     }, [chain])
     return (
-        <main className='flex min-h-screen flex-col lg:flex-row items-center justify-center mx-4' >
+        <main className='flex min-h-screen flex-col lg:flex-row items-center justify-center mx-4 ' >
 
             <ConnectModal handleConnectModal={handleConnectModal} openModal={openModal} isConnected={isConnected} connectors={connectors} pendingConnector={pendingConnector} connect={connect} error={connectError} />
 
-            <section className={` flex flex-col bg-white z-20 rounded-xl relative max-w-screen-xl`}>
+            <section className={` flex flex-col bg-white z-20 rounded-xl relative max-w-screen-xl w-full`}>
                 <Toaster richColors position="top-right" duration={2000} />
                 <div className='window-bg z-10' />
                 <NavBar url={'/721'} />
@@ -115,10 +127,7 @@ function App() {
                 </aside>
                 <article className='flex justify-center lg:justify-start items-center gap-6 md:mx-16'>
 
-                    <section className='flex flex-col md:min-w-[350px] justify-center items-center mb-20 z-20 bg-[#E6EFFA] px-12 py-8 rounded-lg gap-4 shadow-lg shadow-black'>
-                        <Image width={200} height={200} loading='lazy' src="/ERC721.png" alt="" priority={false} className='rounded-lg' />
-                        <button className='bg-[#1B1B1B] w-[200px] font-medium rounded-lg text-lg px-5 py-2.5' onClick={() => handleMint()}>Mint</button>
-                    </section>
+                    <Erc721MintSection address={address} handleMint={handleMint} />
                     <Erc721Info supportedNetworks={supported_networks.sepolia} chain={chain} address={address} data={balance} tokensBalance={tokensBalance} contract={contract} tokenSupply={tokenSupply} />
 
                 </article>

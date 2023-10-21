@@ -108,7 +108,7 @@ function App() {
 
             <ConnectModal handleConnectModal={handleConnectModal} openModal={openModal} isConnected={isConnected} connectors={connectors} pendingConnector={pendingConnector} connect={connect} error={connectError} />
 
-            <section className={` flex flex-col bg-white z-20 rounded-xl relative max-w-screen-xl`}>
+            <section className={` flex flex-col bg-white z-20 rounded-xl relative max-w-screen-xl w-full`}>
                 <Toaster richColors position="top-right" duration={2000} />
                 <div className='window-bg z-10' />
                 <NavBar url={'/erc20'} />
