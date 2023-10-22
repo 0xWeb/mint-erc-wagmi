@@ -1,6 +1,5 @@
 "use client"
 
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import ConnectButton from '@/components/ConnectButton'
@@ -20,16 +19,16 @@ import { useGetBalance } from '@/hooks/useGetBalance'
 import { useGetTokenBalance } from '@/hooks/useGetTokenBalance'
 import Erc721Info from '@/components/erc721/Erc721Info'
 import Erc721MintSection from '@/components/erc721/Erc721MintSection'
+import WalletItems from '@/components/erc721/WalletItems'
 
 
 function App() {
     const standard = '721'
 
-    const [mintAmount, setMintAmount] = useState("")
-    const [tokenSupply, setTokenSupply] = useState(12)
+    const [tokenSupply, setTokenSupply] = useState()
     const [mintHash, setMintHash] = useState()
     const [openModal, setOpenModal] = useState(false)
-    const [tokensMinted, setTokensMinted] = useState()
+
 
     const { connect, error: connectError, connectors, pendingConnector } = useConnect()
     const { address, isConnected, onConnect } = useAccount({
@@ -41,6 +40,7 @@ function App() {
                 handleToast('error', 'Network Not Supported')
                 switchNetwork()
             }
+
         }
     })
 
@@ -59,30 +59,22 @@ function App() {
         functionName: 'totalSupply',
         watch: true,
         onSuccess(data) {
-            setTokenSupply(ethers.formatEther(data))
+            setTokenSupply(ethers.formatUnits(data, "wei"))
+        },
+    })
 
-        },
-    })
-    const tokenOfOwnerByIndex = useContractRead({
-        address: contract,
-        abi: ABI,
-        functionName: 'tokenOfOwnerByIndex',
-        watch: true,
-        args: [address, 1],
-        onSuccess(data) {
-            console.log(data);
-        },
-    })
-    const { write: mintNFT, isSuccess, isError, isLoading } = useContractWrite({
+
+    const { write: mintNFT } = useContractWrite({
         address: contract,
         abi: ABI,
         functionName: 'mintNFT',
+        args: [address],
         onError(error) {
             handleToast('error', error.details)
         },
         onSuccess(data) {
             setMintHash(data.hash);
-            setTokensMinted(ethers.formatEther(mintAmount))
+            console.log(mintNFT);
         }
     })
 
@@ -103,13 +95,13 @@ function App() {
     const handleMint = () => {
         mintNFT()
     }
-
     useEffect(() => {
         if (isConnected && chain.id !== supported_networks.sepolia) {
             handleToast('error', 'Network Not Supported Swicht To Sepolia')
             switchNetwork()
         }
-    }, [chain])
+    }, [chain, isConnected, address])
+
     return (
         <main className='flex min-h-screen flex-col lg:flex-row items-center justify-center mx-4 ' >
 
@@ -126,6 +118,8 @@ function App() {
                     }
                 </aside>
                 <article className='flex justify-center lg:justify-start items-center gap-6 md:mx-16'>
+
+
 
                     <Erc721MintSection address={address} handleMint={handleMint} />
                     <Erc721Info supportedNetworks={supported_networks.sepolia} chain={chain} address={address} data={balance} tokensBalance={tokensBalance} contract={contract} tokenSupply={tokenSupply} />

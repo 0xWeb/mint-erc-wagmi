@@ -13,7 +13,7 @@ function Erc20Info({ address, data, tokensBalance, contract, tokenSupply, chain,
                 <br />
                 <h4>Token Address: {contract}</h4>
                 <h4>Token Symbol: W3T</h4>
-                <h4>Token Supply: {tokenSupply ? tokenSupply : 'Loading...'}</h4>
+                <h4>Token Supply: {tokenSupply ? `${tokenSupply}` : 'Loading...'}</h4>
             </div>
         </section>
     )

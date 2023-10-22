@@ -1,20 +1,20 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import WalletItems from "./WalletItems";
 
 function Erc721Info({ address, data, tokensBalance, contract, tokenSupply, chain, supportedNetworks }) {
 
     const [textColor, setTextColor] = useState('white')
     const [selectedSection, setSelectedSection] = useState('wallet')
     const [textColorNonSelected, setTextColorNonSelected] = useState('black')
+    const array = Array.from({ length: tokensBalance }, (_, i) => i)
 
     const handleChnageTextColor = () => {
         setTextColor(textColorNonSelected);
         setTextColorNonSelected(textColor);
     }
 
-    const sectionButtonsStyle = `rounded-lg transition-all ${selectedSection === 'wallet' ? `absolute  h-full w-1/2 bg-black rounded-lg left-[0] duration-[600ms]  translate-x-[0]` : `absolute  h-full w-1/2 bg-black rounded-lg left-[0] duration-[600ms] translate-x-[100%]`}`
-
-
+    const sectionButtonsStyle = ` ${selectedSection === 'wallet' ? `absolute  h-full w-1/2 bg-black rounded-lg left-[0] duration-[600ms]  translate-x-[0]` : `absolute  h-full w-1/2 bg-black rounded-lg left-[0] duration-[600ms] translate-x-[100%] `}`
 
     return (
         <section className='hidden relative lg:flex flex-col justify-start items-center w-full mb-20 z-10 bg-[#1B1B1B] px-12 py-12  rounded-lg'>
@@ -40,9 +40,11 @@ function Erc721Info({ address, data, tokensBalance, contract, tokenSupply, chain
                 &&
                 <div className='text-2xl flex gap-4'>
 
-                    <Image width={200} height={200} loading='lazy' src="/ERC721.png" alt="" priority={false} className='rounded-lg' />
-                    <Image width={200} height={200} loading='lazy' src="/ERC721.png" alt="" priority={false} className='rounded-lg' />
-
+                    {address &&
+                        array.map((index) => {
+                            return <WalletItems key={index} index={index} address={address} />
+                        })
+                    }
                 </div>
             }
 
@@ -51,7 +53,9 @@ function Erc721Info({ address, data, tokensBalance, contract, tokenSupply, chain
                 &&
                 <div className='text-2xl'>
                     <Image width={200} height={200} loading='lazy' src="/ERC721.png" alt="" priority={false} className='rounded-lg' />
-
+                    <div>
+                        <button>Unstake</button>
+                    </div>
                 </div>
             }
         </section >

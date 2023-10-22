@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useContractRead } from "wagmi";
 import { ethers, parseEther, } from 'ethers';
+import { contract, ABI, supported_networks } from '@/constants/erc721'
 
-export const useGetTokenBalance = ({ address, contract, ABI, standard }) => {
+export const useGetTokenBalance = ({ address, standard }) => {
 
     const [tokensBalance, setTokensBalance] = useState()
     const getTokensBalance = useContractRead({
@@ -14,10 +15,11 @@ export const useGetTokenBalance = ({ address, contract, ABI, standard }) => {
             if (standard === '20') {
                 setTokensBalance(ethers.formatEther(data))
             } else if (standard === '721') {
-                setTokensBalance(data)
+                setTokensBalance(ethers.formatUnits(data, 'wei'))
             } else {
                 setTokensBalance(data)
             }
+
 
 
 
