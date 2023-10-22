@@ -22,14 +22,12 @@ function Erc721Info({ address, data, tokensBalance, contract, tokenSupply, chain
                 <div className='flex items-center relative text-white cursor-pointer'>
                     <div className={sectionButtonsStyle} />
                     <h2 className={`text-2xl px-6 py-3  text-${textColor}`} onClick={(e) => {
-                        indicator(e.target)
                         setSelectedSection('wallet')
                         if (selectedSection !== 'wallet') {
                             handleChnageTextColor(e)
                         }
                     }}>Wallet</h2>
                     <h2 className={`text-2xl px-6 py-3 text-${textColorNonSelected}`} onClick={(e) => {
-                        indicator(e.target)
                         if (selectedSection !== 'staked') {
                             handleChnageTextColor(e)
                         }
