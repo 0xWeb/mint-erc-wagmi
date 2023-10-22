@@ -140,46 +140,5 @@ body {
 
 nav h2 {
   position: relative;
-  font-size: 2rem;
   text-decoration: none;
-}
-
-nav .marker-right {
-  right: 0;
-  position: absolute;
-  height: 100%;
-  width: 50%;
-  background: #000;
-}
-
-/* nav .marker-left {
-  left: 0;
-  position: absolute;
-  height: 100%;
-  width: 50%;
-  background: #000;
-}
-
-nav .marker {
-  transition: 1s;
-} */
-
-@keyframes left-transition {
-  from {
-    transform: translateX(106px)
-  }
-
-  to {
-    transform: translateX(0)
-  }
-}
-
-@keyframes right-transition {
-  from {
-    transform: translateX(106px)
-  }
-
-  to {
-    transform: translateX(0)
-  }
 }

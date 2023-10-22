@@ -18,13 +18,15 @@ function Erc721Info({ address, data, tokensBalance, contract, tokenSupply, chain
         setTextColorNonSelected(textColor);
     }
 
-    const infoSectionStyle = `absolute  h-full w-1/2 bg-black rounded-lg left-[0] duration-[600ms]  translate-x-[${marketLeft}]`
+    const sectionButtonsStyle = `rounded-lg transition-all ${selectedSection === 'wallet' ? `absolute  h-full w-1/2 bg-black rounded-lg left-[0] duration-[600ms]  translate-x-[0]` : `absolute  h-full w-1/2 bg-black rounded-lg left-[0] duration-[600ms] translate-x-[100%]`}`
+
+
 
     return (
         <section className='hidden relative lg:flex flex-col justify-start items-center w-full mb-20 z-10 bg-[#1B1B1B] px-12 py-12  rounded-lg'>
             <nav className="flex text-center justify-center bg-slate-200 rounded-xl absolute -top-7 max-w-[210px] w-full">
                 <div className='flex items-center relative text-white cursor-pointer'>
-                    <div className={infoSectionStyle} />
+                    <div className={sectionButtonsStyle} />
                     <h2 className={`text-2xl px-6 py-3  text-${textColor}`} onClick={(e) => {
                         indicator(e.target)
                         setSelectedSection('wallet')
