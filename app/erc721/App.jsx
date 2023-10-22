@@ -20,10 +20,10 @@ import { useGetTokenBalance } from '@/hooks/useGetTokenBalance'
 import Erc721Info from '@/components/erc721/Erc721Info'
 import Erc721MintSection from '@/components/erc721/Erc721MintSection'
 import WalletItems from '@/components/erc721/WalletItems'
+import { useGetErc721Balance } from '@/hooks/useGetErc721Balance'
 
 
 function App() {
-    const standard = '721'
 
     const [tokenSupply, setTokenSupply] = useState()
     const [mintHash, setMintHash] = useState()
@@ -35,7 +35,7 @@ function App() {
         onConnect() {
             setOpenModal(false)
             getBalance.refetch()
-            getTokensBalance.refetch()
+            getErc721Balance.refetch()
             if (chain.id !== supported_networks.sepolia) {
                 handleToast('error', 'Network Not Supported')
                 switchNetwork()
@@ -50,7 +50,7 @@ function App() {
         throwForSwitchChainNotSupported: true,
     })
 
-    const { getTokensBalance, tokensBalance } = useGetTokenBalance({ address, contract, ABI, standard });
+    const { getErc721Balance, erc721Balance } = useGetErc721Balance({ address });
     const { getBalance, balance } = useGetBalance({ address });
 
     const totalSupply = useContractRead({
@@ -83,7 +83,7 @@ function App() {
         hash: mintHash,
         onSuccess() {
             getBalance.refetch()
-            getTokensBalance.refetch()
+            getErc721Balance.refetch()
             handleToast('success', `You succesfully minted your 0XNFT`)
         },
     })
@@ -122,7 +122,7 @@ function App() {
 
 
                     <Erc721MintSection address={address} handleMint={handleMint} />
-                    <Erc721Info supportedNetworks={supported_networks.sepolia} chain={chain} address={address} data={balance} tokensBalance={tokensBalance} contract={contract} tokenSupply={tokenSupply} />
+                    <Erc721Info supportedNetworks={supported_networks.sepolia} chain={chain} address={address} data={balance} tokensBalance={erc721Balance} contract={contract} tokenSupply={tokenSupply} />
 
                 </article>
             </section>

@@ -20,7 +20,6 @@ function WalletItems({ address, index }) {
         args: [address, 0],
         onSuccess(data) {
             setindexOfNft(ethers.formatUnits(data, "wei"))
-            console.log(ethers.formatUnits(data, "wei"));
         },
     })
 
@@ -32,7 +31,6 @@ function WalletItems({ address, index }) {
         args: [index + 1],
         onSuccess(data) {
             getNFT(data)
-            console.log(data);
         },
     })
 
