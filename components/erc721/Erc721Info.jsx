@@ -6,12 +6,6 @@ function Erc721Info({ address, data, tokensBalance, contract, tokenSupply, chain
     const [textColor, setTextColor] = useState('white')
     const [selectedSection, setSelectedSection] = useState('wallet')
     const [textColorNonSelected, setTextColorNonSelected] = useState('black')
-    const [marketLeft, setMarketLeft] = useState('0px')
-
-
-    function indicator(e) {
-        setMarketLeft(`${e.offsetLeft + "px"}`)
-    }
 
     const handleChnageTextColor = () => {
         setTextColor(textColorNonSelected);
