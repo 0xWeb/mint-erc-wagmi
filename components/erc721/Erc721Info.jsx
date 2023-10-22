@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Erc721Info({ address, data, tokensBalance, contract, tokenSupply, chain, supportedNetworks }) {
 
@@ -18,14 +18,13 @@ function Erc721Info({ address, data, tokensBalance, contract, tokenSupply, chain
         setTextColorNonSelected(textColor);
     }
 
-    const sectionButtonsStyle = `absolute h-full w-1/2 bg-black rounded-lg left-[${marketLeft}]`
-
+    const infoSectionStyle = `absolute  h-full w-1/2 bg-black rounded-lg left-[0] duration-[600ms]  translate-x-[${marketLeft}]`
 
     return (
         <section className='hidden relative lg:flex flex-col justify-start items-center w-full mb-20 z-10 bg-[#1B1B1B] px-12 py-12  rounded-lg'>
             <nav className="flex text-center justify-center bg-slate-200 rounded-xl absolute -top-7 max-w-[210px] w-full">
                 <div className='flex items-center relative text-white cursor-pointer'>
-                    <div className={sectionButtonsStyle}></div>
+                    <div className={infoSectionStyle} />
                     <h2 className={`text-2xl px-6 py-3  text-${textColor}`} onClick={(e) => {
                         indicator(e.target)
                         setSelectedSection('wallet')
@@ -57,17 +56,8 @@ function Erc721Info({ address, data, tokensBalance, contract, tokenSupply, chain
                 selectedSection === 'staked'
                 &&
                 <div className='text-2xl'>
-                    <h4>User Address: {address ? chain.id === supportedNetworks ? address : 'Network not supported' : 'No wallet detected'}</h4>
-                    <h4>Ethereum Balance: {address && data ? chain.id === supportedNetworks ? `${data.formatted?.slice(0, 6)} ETH` : 'Network not supported' : 'No wallet detected'}</h4>
-                    <h4>OxToken Balance: {address && data
-                        ? tokensBalance ? chain.id === supportedNetworks ? `${tokensBalance} 0XNFT` : 'Network not supported' : 'Loading...'
-                        : 'No wallet detected'}</h4>
-                    <br />
-                    <hr />
-                    <br />
-                    <h4>Token Address: {contract}</h4>
-                    <h4>Token Symbol: 0XNFT</h4>
-                    <h4>Token Supply: {tokenSupply ? tokenSupply : 'Loading...'}</h4>
+                    <Image width={200} height={200} loading='lazy' src="/ERC721.png" alt="" priority={false} className='rounded-lg' />
+
                 </div>
             }
         </section >
