@@ -5,7 +5,7 @@ export default function Home() {
 
   return (
     <>
-      <main className={`flex min-h-screen flex-col lg:flex-row items-center justify-center  mx-4 window`}>
+      <main className={`flex max-h-screen h-full flex-col lg:flex-row items-center justify-center  mx-4 window`}>
         <section className='flex flex-col bg-white  rounded-xl relative max-w-screen-xl w-full '>
           <div className='window-bg z-10'></div>
           <NavBar />

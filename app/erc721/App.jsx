@@ -103,7 +103,7 @@ function App() {
     }, [chain, isConnected, address])
 
     return (
-        <main className='flex min-h-screen flex-col lg:flex-row items-center justify-center mx-4 ' >
+        <main className='flex max-h-screen h-full flex-col lg:flex-row items-center justify-center mx-4 ' >
 
             <ConnectModal handleConnectModal={handleConnectModal} openModal={openModal} isConnected={isConnected} connectors={connectors} pendingConnector={pendingConnector} connect={connect} error={connectError} />
 

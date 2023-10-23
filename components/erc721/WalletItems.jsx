@@ -9,6 +9,8 @@ function WalletItems({ address, index }) {
     const [indexOfNft, setindexOfNft] = useState()
     const [URI, setURI] = useState()
     const [item, setItem] = useState()
+    const [isLoading, setIsLoading] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
 
 
 
@@ -18,12 +20,15 @@ function WalletItems({ address, index }) {
         functionName: 'tokenOfOwnerByIndex',
         watch: true,
         args: [address, 0],
+        onSettled() {
+            setIsLoading(true)
+        },
         onSuccess(data) {
             setindexOfNft(ethers.formatUnits(data, "wei"))
         },
     })
 
-    const tokenUri = useContractRead({
+    const { data } = useContractRead({
         address: contract,
         abi: ABI,
         functionName: 'tokenURI',
@@ -40,10 +45,15 @@ function WalletItems({ address, index }) {
         setItem(info)
     }
 
+
     return (
-        <div className=' text-black flex flex-col relative gap-2' >
+        <div className=' text-black flex flex-col relative gap-2 loading' >
+
             <p className='absolute text-3xl bg-white rounded-tl-lg'>{item?.name}</p>
-            <img src={item?.image} alt="" className='w-[150px] rounded-lg' />
+
+            {
+                item?.image ? <img src={item?.image} alt="" className='w-[150px] h-[240px] rounded-lg clas' loading='lazy' /> : <div class="skeleton-enmp8iheqvm"></div>
+            }
             <div className='flex justify-between'>
                 <button className='bg-green-500 px-6 py-1 rounded-lg'>
                     Stake
@@ -52,6 +62,7 @@ function WalletItems({ address, index }) {
                     <IconFlame />
                 </button>
             </div>
+
         </div>
     )
 }

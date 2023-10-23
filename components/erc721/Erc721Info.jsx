@@ -1,13 +1,28 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import WalletItems from "./WalletItems";
+import { IconArrowBigLeftFilled, IconArrowBigRightFilled } from "@tabler/icons-react";
+import { handleToast } from "@/utils/Toast";
 
 function Erc721Info({ address, data, tokensBalance, contract, tokenSupply, chain, supportedNetworks }) {
 
     const [textColor, setTextColor] = useState('white')
     const [selectedSection, setSelectedSection] = useState('wallet')
     const [textColorNonSelected, setTextColorNonSelected] = useState('black')
+    const [slideIndex, setSlideIndex] = useState(1)
     const array = Array.from({ length: tokensBalance }, (_, i) => i)
+
+    const nextSlide = () => {
+        if (slideIndex < tokensBalance) {
+            setSlideIndex(slideIndex + 1)
+        } else handleToast('error', "You don't have more NFTs")
+    }
+
+    const prevSlide = () => {
+        if (slideIndex >= 2) {
+            setSlideIndex(slideIndex - 1)
+        } else handleToast('error', "This is your first NFT")
+    }
 
     const handleChnageTextColor = () => {
         setTextColor(textColorNonSelected);
@@ -18,7 +33,7 @@ function Erc721Info({ address, data, tokensBalance, contract, tokenSupply, chain
 
     return (
         <section className='hidden relative lg:flex flex-col justify-start items-center w-full mb-20 z-10 bg-[#1B1B1B] px-12 py-12  rounded-lg'>
-            <nav className="flex text-center justify-center bg-slate-200 rounded-xl absolute -top-7 max-w-[210px] w-full">
+            <nav className="flex text-center justify-center bg-slate-200 rounded-xl absolute -top-7 l-[50%] max-w-[210px] w-full">
                 <div className='flex items-center relative text-white cursor-pointer'>
                     <div className={sectionButtonsStyle} />
                     <h2 className={`text-2xl px-6 py-3  text-${textColor}`} onClick={(e) => {
@@ -38,13 +53,22 @@ function Erc721Info({ address, data, tokensBalance, contract, tokenSupply, chain
             {
                 selectedSection === 'wallet'
                 &&
-                <div className='text-2xl flex gap-4'>
+                <div className='text-2xl flex gap-4 justify-start items-center'>
 
-                    {address &&
-                        array.map((index) => {
-                            return <WalletItems key={index} index={index} address={address} />
-                        })
-                    }
+                    <div className='text-2xl flex gap-4 justify-center items-center'>
+                        <button className="border-2 p-1 rounded-lg" onClick={prevSlide}>
+                            <IconArrowBigLeftFilled className='text-white ' />
+                        </button>
+                        {address &&
+                            array.slice(slideIndex - 1, slideIndex).map((index) => {
+                                return <WalletItems key={index} index={index} address={address} />
+                            })
+                        }
+                        <button className="border-2 p-1 rounded-lg" onClick={nextSlide}>
+                            <IconArrowBigRightFilled className='text-white' />
+                        </button>
+                    </div>
+
                 </div>
             }
 
