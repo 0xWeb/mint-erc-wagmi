@@ -117,13 +117,10 @@ function App() {
                         : <ConnectButton handleConnectModal={handleConnectModal} />
                     }
                 </aside>
-                <article className='flex justify-center lg:justify-start items-center gap-6 md:mx-16'>
-
-
+                <article className='flex justify-center md:justify-start items-center gap-6 mx-8 xl:mx-12  mb-16  max-h-[590px]'>
 
                     <Erc721MintSection address={address} handleMint={handleMint} />
                     <Erc721Info supportedNetworks={supported_networks.sepolia} chain={chain} address={address} data={balance} tokensBalance={erc721Balance} contract={contract} tokenSupply={tokenSupply} />
-
                 </article>
             </section>
 

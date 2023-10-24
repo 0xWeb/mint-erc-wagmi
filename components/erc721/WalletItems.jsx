@@ -6,7 +6,7 @@ import { IconFlame } from '@tabler/icons-react';
 
 function WalletItems({ address, index }) {
 
-    const [indexOfNft, setindexOfNft] = useState()
+    const [indexOfNft, setIndexOfNft] = useState()
     const [URI, setURI] = useState()
     const [item, setItem] = useState()
     const [isLoading, setIsLoading] = useState(false)
@@ -19,12 +19,13 @@ function WalletItems({ address, index }) {
         abi: ABI,
         functionName: 'tokenOfOwnerByIndex',
         watch: true,
-        args: [address, 0],
+        args: [address, index],
         onSettled() {
             setIsLoading(true)
         },
         onSuccess(data) {
-            setindexOfNft(ethers.formatUnits(data, "wei"))
+            setIndexOfNft(ethers.formatUnits(data, "wei"))
+
         },
     })
 
@@ -33,9 +34,10 @@ function WalletItems({ address, index }) {
         abi: ABI,
         functionName: 'tokenURI',
         watch: true,
-        args: [index + 1],
+        args: [indexOfNft],
         onSuccess(data) {
             getNFT(data)
+
         },
     })
 
@@ -43,6 +45,7 @@ function WalletItems({ address, index }) {
         const res = await fetch(data)
         const info = await res.json()
         setItem(info)
+
     }
 
 
