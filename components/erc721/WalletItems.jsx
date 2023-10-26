@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useContractRead } from 'wagmi';
-import { contract, ABI, supported_networks } from '@/constants/erc721'
+import { useContractRead, useContractWrite } from 'wagmi';
+import { contract, ABI, supported_networks, stakingContract, stakingABI } from '@/constants/erc721'
 import { ethers } from 'ethers';
 import { IconFlame } from '@tabler/icons-react';
 
@@ -10,7 +10,7 @@ function WalletItems({ address, index }) {
     const [URI, setURI] = useState()
     const [item, setItem] = useState()
     const [isLoading, setIsLoading] = useState(false)
-    const [isSuccess, setIsSuccess] = useState(false)
+    const [isApproved, setIsApproved] = useState(false)
 
 
 
@@ -48,19 +48,56 @@ function WalletItems({ address, index }) {
 
     }
 
+    const { write: approveTokenToStake } = useContractWrite({
+        address: contract,
+        abi: ABI,
+        functionName: 'approve',
+        args: [stakingContract, indexOfNft],
+    })
+
+    const isTokenApproved = useContractRead({
+        address: contract,
+        abi: ABI,
+        watch: true,
+        functionName: 'getApproved',
+        args: [indexOfNft],
+        onSuccess(data) {
+            console.log(data);
+            if (data === stakingContract) {
+                setIsApproved(true)
+            }
+        },
+    })
+
+    const { write: stakeItem } = useContractWrite({
+        address: stakingContract,
+        abi: stakingABI,
+        functionName: 'stake',
+        args: [indexOfNft]
+    })
+
+
+
+
 
     return (
         <div className=' text-black flex flex-col relative gap-2 loading' >
 
-            <p className='absolute text-3xl bg-white rounded-tl-lg'>{item?.name}</p>
+            <p className='absolute text-3xl bg-white rounded-tl-lg z-10'>{item?.name}</p>
 
             {
-                item?.image ? <img src={item?.image} alt="" className='w-[150px] h-[240px] rounded-lg clas' loading='lazy' /> : <div class="skeleton-enmp8iheqvm"></div>
+                item?.image ? <img src={item?.image} alt="" className='w-[150px] h-[240px] rounded-lg clas' loading='lazy' /> : <div className="skeleton-enmp8iheqvm"></div>
             }
             <div className='flex justify-between'>
-                <button className='bg-green-500 px-6 py-1 rounded-lg'>
-                    Stake
-                </button>
+                {
+                    isApproved
+                        ? <button className='bg-green-500 px-6 py-1 rounded-lg' onClick={() => stakeItem()}>
+                            Stake
+                        </button>
+                        : <button className='bg-green-500 px-4 py-1 rounded-lg' onClick={() => approveTokenToStake()}>
+                            Approve
+                        </button>
+                }
                 <button className='bg-red-500 px-3 py-1 rounded-lg'>
                     <IconFlame />
                 </button>

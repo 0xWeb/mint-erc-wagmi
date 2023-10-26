@@ -27,13 +27,13 @@ function ERC721WalletInfo({ address, contract, chain, data, tokenSupply, support
             <div className='hidden lg:flex lg:flex-col'>
                 <h2 className='text-3xl border-b-2 mb-4'>Token & User Info</h2>
                 <h4>Ethereum Balance: {address && data ? chain.id === supportedNetworks ? `${data.formatted?.slice(0, 6)} ETH` : 'Network not supported' : 'No wallet detected'}</h4>
-                <h4>OxToken Balance: {address && data
+                <h4>0XNFT Balance: {address && data
                     ? tokensBalance ? chain.id === supportedNetworks ? `${tokensBalance} W3T` : 'Network not supported' : 'Loading...'
                     : 'No wallet detected'}</h4>
                 <br />
-                <h4>Token Address: {addressFormater(contract)}</h4>
+                <h4>ERC721 Address: {addressFormater(contract)}</h4>
                 <h4>Token Symbol: 0XNFT</h4>
-                <h4>Token Supply: {tokenSupply ? `${tokenSupply}` : 'Loading...'}</h4>
+                <h4>Supply: {tokenSupply ? `${tokenSupply}` : 'Loading...'}</h4>
             </div>
             <div className=' text-2xl flex gap-4 justify-center items-center'>
                 <button className="border-2 p-1 rounded-lg" onClick={prevSlide}>

@@ -161,8 +161,8 @@ nav h2 {
 .skeleton-enmp8iheqvm:empty:before {
   content: ' ';
   position: absolute;
-  z-index: 1000;
-  width: 100%;
+  z-index: 1;
+  width: 70px;
   height: 240px;
   -webkit-mask-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80%);
   -webkit-mask-repeat: repeat-y;
@@ -179,4 +179,49 @@ nav h2 {
   to {
     -webkit-mask-position: 120% 0
   }
+}
+
+.nft-name {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.skeleton-2:empty {
+  position: relative;
+  height: 124px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 0px 0px 0px 0px;
+  background-image: linear-gradient(#E0E0E0 300px, transparent 0);
+  background-repeat: repeat-y;
+  background-size: 150px 124px;
+  background-position: left 0px top 0px;
+  border-radius: 8px;
+}
+
+.skeleton-2:empty:before {
+  content: ' ';
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 124px;
+  -webkit-mask-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80%);
+  -webkit-mask-repeat: repeat-y;
+  -webkit-mask-size: 50px 300px;
+  -webkit-mask-position: -20% 0;
+  background-image: linear-gradient(rgb(175, 175, 175) 300px, transparent 0);
+  background-repeat: repeat-y;
+  background-size: 150px 250px;
+  background-position: left 0px top 0px;
+  animation: shineForSkeleton-2 0.6s infinite;
+}
+
+@keyframes shineForSkeleton-2 {
+  to {
+    -webkit-mask-position: 120% 0
+  }
+}
+
+.staked::-webkit-scrollbar {
+  width: 0 !important
 }
