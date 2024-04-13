@@ -1,6 +1,8 @@
 "use client"
 
-import { createConfig, configureChains, sepolia } from 'wagmi'
+import { createConfig, configureChains } from 'wagmi'
+import { scroll } from 'wagmi/chains'
+
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
@@ -10,7 +12,7 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 export const { chains, publicClient } = configureChains(
-    [sepolia],
+    [scroll],
     [
         alchemyProvider({
             apiKey: process.env.ALCHEMY_API_KEY,

@@ -1,8 +1,8 @@
-export const contract = "0x697D13a66207b87B9b1C6FB9338Fe808E0B351e3"
-export const stakingContract = "0x3f414AdC2C9aC63CdC018E4706859DFB85A040Ff"
+export const contract = "0x78B7ae660DB84abdCf46E4f5c2bc7727C3d501eb"
+export const stakingContract = "0x127c86e45526a95F0D3852ed6965FDB707e5a555"
 
 export const supported_networks = {
-    sepolia: 11155111
+    sepolia: 534352
 }
 
 export const ABI = [

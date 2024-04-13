@@ -47,7 +47,7 @@ function App() {
 
     const { chain } = useNetwork()
     const { chains, error, pendingChainId, switchNetwork } = useSwitchNetwork({
-        chainId: 11155111,
+        chainId: 534352,
         throwForSwitchChainNotSupported: true,
     })
 
@@ -113,7 +113,7 @@ function App() {
                 <div className='window-bg z-10' />
                 <NavBar url={'/erc20'} />
                 <aside className='flex justify-end z-20 '>
-                    {isConnected && chain.id === 11155111
+                    {isConnected && chain.id === 534352
                         ? <WalletInfo address={address} balance={balance?.formatted} />
                         : <ConnectButton handleConnectModal={handleConnectModal} />
                     }

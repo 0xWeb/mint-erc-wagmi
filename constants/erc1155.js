@@ -1,7 +1,7 @@
 export const contract = ""
 
 export const supported_networks = {
-    sepolia: 11155111
+    sepolia: 534352
 }
 
 export const ABI = ""
